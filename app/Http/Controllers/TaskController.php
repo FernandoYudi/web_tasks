@@ -2,47 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TaskService;
 use App\Models\Task;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
-{
-    public function index(Request $request)
-    {
-        // Filtro por status
-        $tasks = Task::when($request->status, function ($query) use ($request) {
-            return $query->where('status', $request->status);
-        })->get();
+class TaskController extends Controller {
+    public function __construct(private TaskService $taskService) {}
 
-        return response()->json($tasks);
+    public function index(Request $request) {
+        return response()->json($this->taskService->getTasks($request->status));
+    }
+    
+    public function store(TaskRequest $request) {
+        return response()->json($this->taskService->createTask($request->validated()), 201);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'status' => 'in:pending,done',
-        ]);
-
-        $task = Task::create($request->all());
-        return response()->json($task, 201);
+    public function update(TaskRequest $request, Task $task) {
+        return response()->json($this->taskService->updateTask($task, $request->validated()));
     }
 
-    public function update(Request $request, Task $task)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'status' => 'in:pending,done',
-        ]);
-
-        $task->update($request->all());
-        return response()->json($task);
-    }
-
-    public function destroy(Task $task)
-    {
-        $task->delete();
+    public function destroy(Task $task) {
+        $this->taskService->deleteTask($task);
         return response()->json(null, 204);
     }
+    
 }
-

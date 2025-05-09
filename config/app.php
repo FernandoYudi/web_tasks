@@ -148,10 +148,13 @@ return [
     Illuminate\Session\SessionServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
+    Illuminate\Translation\TranslationServiceProvider::class,
+
 
 
     App\Providers\AppServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
+    App\Providers\TaskServiceProvider::class,
 ],
     
 

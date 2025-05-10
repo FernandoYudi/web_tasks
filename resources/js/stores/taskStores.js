@@ -10,11 +10,11 @@ export const useTaskStore = defineStore('taskStore', {
         async fetchTasks(status = '') {
             try {
                 const response = await axios.get(`/api/tasks${status ? '?status=' + status : ''}`);
-                console.log("Tarefas carregadas no Vue:", response.data);
+                // console.log("Tarefas carregadas no Vue:", response.data);
                 this.tasks = response.data; //Atualizando o estado
-                console.log("Estado atualizado:", this.tasks);
+                // console.log("Estado atualizado:", this.tasks);
             } catch (error) {
-                console.error("🚨 Erro ao buscar tarefas:", error.response?.data || error.message);
+                console.error("Erro ao buscar tarefas:", error.response?.data || error.message);
             }
         },
 

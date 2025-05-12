@@ -1,65 +1,71 @@
-<<<<<<< HEAD
-# web_tasks
-=======
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto - Desenvolvimento de Gerenciador de Tarefas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Como configurar o projeto
+Instalar o [MySQL Server](https://dev.mysql.com/downloads/mysql/) na porta 3306 e senha de sua escolha.
+Instalar o [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) e criar uma nova conexão com os parâmetros:
+1. Nome: Local
+2. Connection Method: TCP/IP
+3. Hostname:localhost Port:3306
+4. Username:root
+5. Password/StoreinVault: "senha definida"
+Estabelecer uma nova Conexão 
+6. create database "nome de escolha"
 
-## About Laravel
+Instalar o [PHP 8.4.3](https://www.php.net/releases/).
+- Habilitar as seguintes extensões no php.
+    - pdo_mysql
+    - mysqli
+Instalar o [Node 22.12.0](https://nodejs.org/pt/blog/release/v22.12.0).
+Instalar o [Composer](https://getcomposer.org/download/).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Após a instalação configurar o arquivo .env para a conexão com o banco.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE="nome_do_banco"
+DB_USERNAME=root
+DB_PASSWORD="senha definida"
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Comandos para configuração do projeto
 
-## Learning Laravel
+- composer install
+- npm run install
+- php artisan migrate
+- php artisan db:seed --class=TaskSeeder
+- npm run dev
+- php artisan serve
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tecnologias Utilizadas
+- Node 22.12.0
+- MySQL Server 8.3.0
+- Laravel 12.13.0
+- Vue 3.5.13
+- TailwindCSS 3.4.17
+- HTML5
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Ambiente de Desenvolvimento
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para o ambiente de desenvolvimento, foi feita utilização do Visual Studio Code (VSCode) com extensões relacionadas ao desenvolvimento do projeto.
 
-## Laravel Sponsors
+## Desafios e Limitações
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Desenvolver este projeto foi um grande aprendizado, especialmente por integrar Vue.js 3 (frontend) com Laravel (backend).
 
-### Premium Partners
+Inicialmente, tive dificuldades em configurar o Vue para consumir a API Laravel corretamente, especialmente em relação às rotas e ao CORS. Aprender a estruturar as requisições axios e garantir que os endpoints respondessem com JSON.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+Modularidade dos Componentes:
 
-## Contributing
+Organizar a lógica entre componentes, composables e stores (Pinia) para manter o código limpo e reutilizável. Decidir o que ficaria no componente (EditTask.vue), no composable (useEditTask.js) e na store (taskStores.js) não foi trivial, mas acabou sendo essencial para um fluxo de dados eficiente.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Tratamento de Erros:
 
-## Code of Conduct
+Lidar com respostas inesperadas da API (como HTML em vez de JSON) e exibir tanto no Vue quanto no Laravel.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Gerenciamento de Estado:
 
-## Security Vulnerabilities
+Usar o Pinia para centralizar as chamadas à API e sincronizar os dados entre componentes foi desafiador no começo, mas acabou simplificando muito a manutenção do código.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Agradecimentos e Considerações Finais
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> 26fdd41 (Primeiro commit - Criando estrutura CRUD, integração com banco, migrations e seeders.)
+Apesar dos desafios, este projeto foi uma experiência valiosa para aprofundar meus conhecimentos em desenvolvimento full-stack. Agradeço pela oportunidade de realizar o teste técnico para que ao menos eu possa continuar a me desenvolver tanto acadêmicamente quanto profissionalmente.

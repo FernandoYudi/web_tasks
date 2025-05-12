@@ -18,6 +18,60 @@ export const useTaskStore = defineStore('taskStore', {
             }
         },
 
+        async getTaskById(id) {
+        this.isLoading = true
+        this.error = null
+        try {
+            const response = await axios.get(`/api/tasks/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            transformResponse: [function (data) {
+                if (typeof data === 'string' && data.includes('<!DOCTYPE html>')) {
+                throw new Error('Servidor retornou HTML em vez de JSON')
+                }
+                return JSON.parse(data)
+            }]
+            })
+            return response.data
+        } catch (error) {
+            console.error("Erro ao buscar tarefa:", error)
+            if (error.response?.status === 404) {
+            throw new Error('Tarefa não encontrada')
+            }
+            throw error
+        } finally {
+            this.isLoading = false
+        }
+        },
+
+        async updateTask(task) {
+        this.isLoading = true
+        this.error = null
+        try {
+            const response = await axios.put(`/api/tasks/${task.id}`, task, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+            })
+            // Atualiza a lista local
+            this.tasks = this.tasks.map(t => 
+            t.id === task.id ? response.data : t
+            )
+            return response.data
+        } catch (error) {
+            console.error("Erro ao atualizar tarefa:", error)
+            if (error.response?.status === 422) {
+            throw error // Para ser tratado no formulário
+            }
+            throw error
+        } finally {
+            this.isLoading = false
+        }
+        },
+
         async addTask(task) {
             try {
                 const response = await axios.post('/api/tasks', task);
@@ -27,7 +81,7 @@ export const useTaskStore = defineStore('taskStore', {
             }
         },
 
-        async updateTask(task) {
+        async toggleTaskStatus(task) {
             try {
                 const response = await axios.put(`/api/tasks/${task.id}`, {
                     title: task.title,
@@ -36,6 +90,27 @@ export const useTaskStore = defineStore('taskStore', {
                 this.tasks = this.tasks.map(t => t.id === task.id ? response.data : t);
             } catch (error) {
                 console.error("Erro ao atualizar tarefa:", error.response?.data || error.message);
+            }
+        },
+
+        async updateTask(task) {
+            try {
+                const response = await axios.put(`/api/tasks/${task.id}`, {
+                    title: task.title,
+                    description: task.description,
+                    status: task.status
+                }, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                this.tasks = this.tasks.map(t => t.id === task.id ? response.data : t);
+                return response.data;
+            } catch (error) {
+                console.error("Erro ao atualizar tarefa:", error);
+                throw error;
             }
         },
 

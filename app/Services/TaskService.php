@@ -13,14 +13,16 @@ class TaskService {
         return Task::create($data);
     }
 
-    public function updateTask(Task $task, $data) {
-        $validatedData = validator($data, [
-            'title' => 'required|string|max:255',
-            'status' => 'required|in:pending,done',
-        ])->validate();
-    
-        $task->update($validatedData);
-        return $task;
+    public function updateTask(Task $task, array $data)
+    {
+        $task->update($data);
+        return $task->fresh();
+    }
+
+    public function toggleTaskStatus(Task $task, array $data)
+    {
+        $task->update(['status' => $data['status']]);
+        return $task->fresh();
     }
 
     public function deleteTask(Task $task) {

@@ -31,6 +31,7 @@ DB_PASSWORD="senha definida"
 
 - composer install
 - npm run install
+- php artisan key:generate
 - php artisan migrate
 - php artisan db:seed --class=TaskSeeder
 - npm run dev
